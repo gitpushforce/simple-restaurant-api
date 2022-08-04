@@ -1,0 +1,23 @@
+2022-08-02 14:37:16,831 INFO org.springframework.boot.StartupInfoLogger [main] Starting ServerAppApplication using Java 11.0.1 on megatron.local with PID 40190 (/Users/masakinakamura/repositories/simpleRestaurant/server-app/build/classes/java/main started by masakinakamura in /Users/masakinakamura/repositories/simpleRestaurant/server-app)
+2022-08-02 14:37:16,833 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.7.2, Spring v5.3.22
+2022-08-02 14:37:16,834 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-08-02 14:37:17,854 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2022-08-02 14:37:17,868 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2022-08-02 14:37:17,869 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2022-08-02 14:37:17,869 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-08-02 14:37:18,006 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2022-08-02 14:37:18,007 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1123 ms
+2022-08-02 14:37:18,443 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2022-08-02 14:37:18,473 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2022-08-02 14:37:18,485 INFO org.springframework.boot.StartupInfoLogger [main] Started ServerAppApplication in 2.286 seconds (JVM running for 2.69)
+2022-08-02 14:37:26,727 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-08-02 14:37:26,727 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2022-08-02 14:37:26,728 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 1 ms
+2022-08-02 14:37:26,780 INFO com.simple.restaurant.serverapp.controller.OrderController [http-nio-8080-exec-2] /queryall resource was called using table=1 parameter 
+2022-08-02 14:37:26,800 INFO com.zaxxer.hikari.HikariDataSource [http-nio-8080-exec-2] HikariPool-1 - Starting...
+2022-08-02 14:37:27,005 INFO com.zaxxer.hikari.HikariDataSource [http-nio-8080-exec-2] HikariPool-1 - Start completed.
+2022-08-02 14:38:05,177 INFO com.simple.restaurant.serverapp.controller.OrderController [http-nio-8080-exec-5] /queryitem resource was called using orderId=5 parameter
+2022-08-02 14:38:20,888 INFO com.simple.restaurant.serverapp.controller.OrderController [http-nio-8080-exec-6] /add resource was called using table=6 and item=0003 parameters
+2022-08-02 14:38:34,299 INFO com.simple.restaurant.serverapp.controller.OrderController [http-nio-8080-exec-7] /queryall resource was called using table=6 parameter 
+2022-08-02 14:42:19,439 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2022-08-02 14:42:19,462 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
