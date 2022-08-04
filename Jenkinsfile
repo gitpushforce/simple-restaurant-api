@@ -11,8 +11,6 @@ pipeline {
     environment {
         APP_NAME = 'simple-restaurant'
         REPO_URL = 'https://github.com/gitpushforce/simple-restaurant-api.git'
-       // GITHUB_CREDENTIAL = 'github-ssh-credential'
-
     }
 
     stages {
@@ -34,7 +32,6 @@ pipeline {
                             branches: [[name: "origin/${params.APP_REPO_BRANCH}"]],
                             extensions: [],
                             userRemoteConfigs: [[
-                                //credentialsId: env.GITHUB_CREDENTIAL,
                                 url: env.REPO_URL
                             ]]
                         ])
