@@ -39,7 +39,7 @@ At project root directory:
     
 *Execute jar file:*
 
-`java -jar /build/lib/restaurant-api.jar
+`java -jar build/libs/restaurant-api.jar
 `
 ###**PROD**
 Use Jenkinsfile to build in a Jenkins pipeline.
@@ -185,4 +185,10 @@ Deletes an order in DB
 | item_id    | YES |varchar (4)  | -             | NO       | -     |
 | item_name  | NO  |varchar (20) | -             | NO       | -     |
 
-ITEMS_TBL has data already inserted when creating DB with docker-compose.yml 
+ITEMS_TBL has data already inserted when creating DB with docker-compose.yml
+
+
+### Remark:
+The Client project repo is in the link below
+
+`https://github.com/gitpushforce/simple-restaurant-client.git`
