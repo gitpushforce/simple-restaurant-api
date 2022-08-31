@@ -67,12 +67,12 @@ public class OrderServiceTest {
             var res = target.getAllItems(1);
 
             // then:
-            assertEquals(res.getCount(), expected.getCount());
-            assertEquals(res.getOrder().get(0).getOrderId(), expected.getOrder().get(0).getOrderId());
-            assertEquals(res.getOrder().get(0).getTableNum(), expected.getOrder().get(0).getTableNum());
-            assertEquals(res.getOrder().get(0).getItemId(), expected.getOrder().get(0).getItemId());
-            assertEquals(res.getOrder().get(0).getItemName(), expected.getOrder().get(0).getItemName());
-            assertEquals(res.getOrder().get(0).getCookTime(), expected.getOrder().get(0).getCookTime());
+            assertEquals(res.get().getCount(), expected.getCount());
+            assertEquals(res.get().getOrder().get(0).getOrderId(), expected.getOrder().get(0).getOrderId());
+            assertEquals(res.get().getOrder().get(0).getTableNum(), expected.getOrder().get(0).getTableNum());
+            assertEquals(res.get().getOrder().get(0).getItemId(), expected.getOrder().get(0).getItemId());
+            assertEquals(res.get().getOrder().get(0).getItemName(), expected.getOrder().get(0).getItemName());
+            assertEquals(res.get().getOrder().get(0).getCookTime(), expected.getOrder().get(0).getCookTime());
         }
 
         @DisplayName("getAllItems: no data")
@@ -88,8 +88,8 @@ public class OrderServiceTest {
             var res = target.getAllItems(1);
 
             // then:
-            assertEquals(res.getCount(), 0);
-            assertTrue(res.getOrder().isEmpty());
+            assertEquals(res.get().getCount(), 0);
+            assertTrue(res.get().getOrder().isEmpty());
         }
 
         @DisplayName("getAllItems: Optional retrieved from dao was null")
@@ -105,8 +105,8 @@ public class OrderServiceTest {
             var res = target.getAllItems(1);
 
             // then:
-            assertEquals(res.getCount(), 0);
-            assertTrue(res.getOrder().isEmpty());
+            assertEquals(res.get().getCount(), 0);
+            assertTrue(res.get().getOrder().isEmpty());
         }
     }
 
@@ -137,11 +137,11 @@ public class OrderServiceTest {
             var res = target.getItem(1);
 
             // then:
-            assertEquals(res.getOrderId(), 1);
-            assertEquals(res.getTableNum(), 3);
-            assertEquals(res.getItemId(), "0004");
-            assertEquals(res.getItemName(), "item4");
-            assertEquals(res.getCookTime(), 7);
+            assertEquals(res.get().getOrderId(), 1);
+            assertEquals(res.get().getTableNum(), 3);
+            assertEquals(res.get().getItemId(), "0004");
+            assertEquals(res.get().getItemName(), "item4");
+            assertEquals(res.get().getCookTime(), 7);
         }
 
         @DisplayName("getItem: no data")
@@ -156,11 +156,11 @@ public class OrderServiceTest {
             var res = target.getItem(1);
 
             // then:
-            assertNull(res.getOrderId());
-            assertNull(res.getTableNum());
-            assertNull(res.getItemId());
-            assertNull(res.getItemName());
-            assertNull(res.getCookTime());
+            assertNull(res.get().getOrderId());
+            assertNull(res.get().getTableNum());
+            assertNull(res.get().getItemId());
+            assertNull(res.get().getItemName());
+            assertNull(res.get().getCookTime());
         }
     }
 
@@ -181,7 +181,7 @@ public class OrderServiceTest {
             var res = target.createOrder(3, "0004");
 
             // then:
-            assertEquals(res.getSuccess(), true);
+            assertEquals(res.get().getSuccess(), true);
         }
 
         @DisplayName("createOrder: insert fail")
@@ -198,7 +198,7 @@ public class OrderServiceTest {
             var res = target.createOrder(3, "0004");
 
             // then
-            assertEquals(res.getSuccess(), false);
+            assertEquals(res.get().getSuccess(), false);
         }
 
         @DisplayName("createOrder: table number validation fail")
@@ -249,7 +249,7 @@ public class OrderServiceTest {
             var res = target.deleteOrder(2);
 
             // then:
-            assertEquals(res.getSuccess(), true);
+            assertEquals(res.get().getSuccess(), true);
         }
 
         @DisplayName("deleteOrder: insert fail")
@@ -262,7 +262,7 @@ public class OrderServiceTest {
             var res = target.deleteOrder(2);
 
             // then:
-            assertEquals(res.getSuccess(), false);
+            assertEquals(res.get().getSuccess(), false);
         }
     }
 

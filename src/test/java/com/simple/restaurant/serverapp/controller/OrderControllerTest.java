@@ -22,10 +22,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -75,11 +77,14 @@ public class OrderControllerTest {
             orderDtoList.add(orderDto);
 
             OrderListDto expected = new OrderListDto(1, orderDtoList);
-            given(orderServiceMock.getAllItems(anyInt())).willReturn(expected);
+            given(orderServiceMock.getAllItems(anyInt())).willReturn(CompletableFuture.completedFuture(expected));
 
             // when:
-            mockMvc.perform(get("/v1/queryall?table=1"))
-                    // then:
+            MvcResult mvcResult = mockMvc.perform(get("/v1/queryall?table=1")).andReturn();
+
+            // then:
+            mockMvc
+                    .perform(asyncDispatch(mvcResult))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.count", is(1)))
                     .andExpect(jsonPath("$.order[0].orderId", is(1)))
@@ -132,11 +137,14 @@ public class OrderControllerTest {
             expected.setItemName("item1");
             expected.setCookTime(8);
 
-            given(orderServiceMock.getItem(anyInt())).willReturn(expected);
+            given(orderServiceMock.getItem(anyInt())).willReturn(CompletableFuture.completedFuture(expected));
 
             // when:
-            mockMvc.perform(get("/v1/queryitem?orderId=0001"))
-                    // then:
+            MvcResult mvcResult = mockMvc.perform(get("/v1/queryitem?orderId=0001")).andReturn();
+
+            // then:
+            mockMvc
+                    .perform(asyncDispatch(mvcResult))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.orderId", is(1)))
                     .andExpect(jsonPath("$.tableNum", is(3)))
@@ -187,11 +195,12 @@ public class OrderControllerTest {
             CreateDelOrderDto createOrder = new CreateDelOrderDto();
             createOrder.setSuccess(true);
 
-            given(orderServiceMock.createOrder(1, "0001")).willReturn(createOrder);
+            given(orderServiceMock.createOrder(1, "0001")).willReturn(CompletableFuture.completedFuture(createOrder));
 
             // when:
-            mockMvc.perform(put("/v1/add?table=1&item=0001"))
-                    // then:
+            MvcResult mvcResult = mockMvc.perform(put("/v1/add?table=1&item=0001")).andReturn();
+            mockMvc
+                    .perform(asyncDispatch(mvcResult))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.success", is(true)));
         }
@@ -238,11 +247,13 @@ public class OrderControllerTest {
             CreateDelOrderDto createOrder = new CreateDelOrderDto();
             createOrder.setSuccess(true);
 
-            given(orderServiceMock.deleteOrder(anyInt())).willReturn(createOrder);
+            given(orderServiceMock.deleteOrder(anyInt())).willReturn(CompletableFuture.completedFuture(createOrder));
 
             // when:
-            mockMvc.perform(delete("/v1/del?orderId=2"))
-                    // then:
+            MvcResult mvcResult = mockMvc.perform(delete("/v1/del?orderId=2")).andReturn();
+            // then:
+            mockMvc
+                    .perform(asyncDispatch(mvcResult))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.success", is(true)));
         }

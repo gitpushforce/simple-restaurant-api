@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,13 +26,13 @@ public class OrderService {
 
     private final Logger log = LoggerFactory.getLogger(OrderService.class);
 
-    public OrderListDto getAllItems(Integer tableNum) {
+    public CompletableFuture<OrderListDto> getAllItems(Integer tableNum) {
         var daoResult = dao.getAllOrdersByTableNum(tableNum).orElseGet(() ->
                 new ArrayList<>(List.of(ImmutableMap.of())));
 
         if (daoResult.isEmpty() || daoResult.get(0).isEmpty()) {
             log.info("Data not found when trying to retrieve all orders of table " +  tableNum);
-            return new OrderListDto(0, Collections.emptyList());
+            return CompletableFuture.completedFuture(new OrderListDto(0, Collections.emptyList()));
         }
 
         var orderList = daoResult.stream().map(row -> {
@@ -43,14 +44,14 @@ public class OrderService {
                     orderDto.setCookTime((Integer)row.get("cook_time"));
                     return orderDto;
         }).collect(Collectors.toList());
-        return new OrderListDto(daoResult.size(), orderList);
+        return CompletableFuture.completedFuture(new OrderListDto(daoResult.size(), orderList));
     }
 
-    public OrderDto getItem(Integer orderId) {
+    public CompletableFuture<OrderDto> getItem(Integer orderId) {
         var daoResult = dao.getOrderByTableNumberAndItemId(orderId).orElseGet(ImmutableMap::of);
         if (daoResult.isEmpty()) {
             log.info("Data not found when trying to retrieve " + orderId + " orderId");
-            return new OrderDto();
+            return CompletableFuture.completedFuture(new OrderDto());
         }
 
         OrderDto orderDto = new OrderDto();
@@ -59,10 +60,10 @@ public class OrderService {
         orderDto.setItemId((String) daoResult.get("item_id"));
         orderDto.setItemName((String) daoResult.get("item_name"));
         orderDto.setCookTime((Integer)daoResult.get("cook_time"));
-        return orderDto;
+        return CompletableFuture.completedFuture(orderDto);
     }
 
-    public CreateDelOrderDto createOrder(Integer tableNum, String itemId) {
+    public CompletableFuture<CreateDelOrderDto> createOrder(Integer tableNum, String itemId) {
         validateTable(tableNum);
         validateItem(itemId);
         OrderModel model = new OrderModel();
@@ -83,10 +84,10 @@ public class OrderService {
             createDelOrderDto.setSuccess(Boolean.FALSE);
         }
 
-        return createDelOrderDto;
+        return CompletableFuture.completedFuture(createDelOrderDto);
     }
 
-    public CreateDelOrderDto deleteOrder(Integer orderId) {
+    public CompletableFuture<CreateDelOrderDto> deleteOrder(Integer orderId) {
         Integer result = dao.deleteOrderByOrderId(orderId);
         CreateDelOrderDto createDelOrderDto = new CreateDelOrderDto();
         // returns 1 if data was deleted successfully
@@ -97,7 +98,7 @@ public class OrderService {
             log.info("the order could not be removed");
             createDelOrderDto.setSuccess(Boolean.FALSE);
         }
-        return createDelOrderDto;
+        return CompletableFuture.completedFuture(createDelOrderDto);
     }
 
     private void validateTable(Integer tableNum) {
